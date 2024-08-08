@@ -3,6 +3,7 @@ package qweathersdkgo
 import (
 	"fmt"
 	"net/url"
+	"strings"
 )
 
 // LifeIndexResponse 表示生活指数的API响应
@@ -76,8 +77,9 @@ var (
  * @param {int} days 预报天数 (1,3)
  * @return {*}
  */
-func (c *Client) GetIndicesWeather(indicesType, location string, days int) (*LifeIndexResponse, error) {
+func (c *Client) GetIndicesWeather(indicesTypeSlice []string, location string, days int) (*LifeIndexResponse, error) {
 	endpoint := fmt.Sprintf("%s/indices/%dd", c.WeatherURL, days)
+	indicesType := parseIndicesType(indicesTypeSlice)
 	params := url.Values{
 		"type":     {indicesType},
 		"location": {location},
@@ -90,4 +92,8 @@ func (c *Client) GetIndicesWeather(indicesType, location string, days int) (*Lif
 		return nil, err
 	}
 	return &resp, nil
+}
+
+func parseIndicesType(indicesTypeSlice []string) string {
+	return strings.Join(indicesTypeSlice, ",")
 }
