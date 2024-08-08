@@ -10,18 +10,20 @@ import (
 var key = "27df0ab1a3014458b59906f1c8bfa6f7"
 
 type Client struct {
-	APIKey     string
-	WeatherURL string
-	GeoURL     string
-	HTTPClient *http.Client
+	APIKey            string
+	AirQualityBetaURL string
+	WeatherURL        string
+	GeoURL            string
+	HTTPClient        *http.Client
 }
 
 func NewClient(apiKey string) *Client {
 	return &Client{
-		APIKey:     apiKey,
-		WeatherURL: "https://devapi.qweather.com/v7",
-		GeoURL:     "https://geoapi.qweather.com/v2",
-		HTTPClient: &http.Client{},
+		APIKey:            apiKey,
+		AirQualityBetaURL: "https://devapi.qweather.com/airquality/v1/now",
+		WeatherURL:        "https://devapi.qweather.com/v7",
+		GeoURL:            "https://geoapi.qweather.com/v2",
+		HTTPClient:        &http.Client{},
 	}
 }
 
