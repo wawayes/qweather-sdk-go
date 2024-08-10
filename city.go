@@ -2,6 +2,7 @@ package qweathersdkgo
 
 import (
 	"fmt"
+	"log"
 	"net/url"
 )
 
@@ -10,6 +11,7 @@ type CurrentWeather struct {
 	UpdateTime string `json:"updateTime"`
 	FxLink     string `json:"fxLink"`
 	Now        struct {
+		ObsTime   string `json:"obsTime"`
 		Temp      string `json:"temp"`
 		FeelsLike string `json:"feelsLike"`
 		Icon      string `json:"icon"`
@@ -140,7 +142,8 @@ func (c *Client) GetHourlyWeather(location string, days int) (*HourlyWeatherResp
 
 	var result HourlyWeatherResponse
 	err := c.sendRequest("GET", endpoint, params, &result)
-	if err != nil {
+	if err != nil || result.Code != "200" {
+		log.Fatalf("API request failed with status code: %s, msg: %s", result.Code, GetErrorDescription(result.Code))
 		return nil, err
 	}
 

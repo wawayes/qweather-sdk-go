@@ -2,6 +2,7 @@ package qweathersdkgo
 
 import (
 	"fmt"
+	"log"
 	"net/url"
 	"strings"
 )
@@ -88,7 +89,8 @@ func (c *Client) GetIndicesWeather(indicesTypeSlice []string, location string, d
 
 	var resp LifeIndexResponse
 	err := c.sendRequest("GET", endpoint, params, &resp)
-	if err != nil {
+	if err != nil || resp.Code != "200" {
+		log.Fatalf("API request failed with status code: %s, msg: %s", resp.Code, GetErrorDescription(resp.Code))
 		return nil, err
 	}
 	return &resp, nil

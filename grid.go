@@ -2,6 +2,7 @@ package qweathersdkgo
 
 import (
 	"fmt"
+	"log"
 	"net/url"
 )
 
@@ -101,7 +102,8 @@ func (c *Client) GetGridCurrentWeather(location string) (*GridCurrentWeatherResp
 	}
 	var result GridCurrentWeatherResponse
 	err := c.sendRequest("GET", endpoint, params, &result)
-	if err != nil {
+	if err != nil || result.Code != "200" {
+		log.Fatalf("API request failed with status code: %s, msg: %s", result.Code, GetErrorDescription(result.Code))
 		return nil, err
 	}
 	return &result, nil

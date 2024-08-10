@@ -2,19 +2,19 @@ package qweathersdkgo
 
 // 错误码常量
 const (
-	CodeSuccess             = 200
-	CodeNoData              = 204
-	CodeBadRequest          = 400
-	CodeUnauthorized        = 401
-	CodePaymentRequired     = 402
-	CodeForbidden           = 403
-	CodeNotFound            = 404
-	CodeTooManyRequests     = 429
-	CodeInternalServerError = 500
+	CodeSuccess             = "200"
+	CodeNoData              = "204"
+	CodeBadRequest          = "400"
+	CodeUnauthorized        = "401"
+	CodePaymentRequired     = "402"
+	CodeForbidden           = "403"
+	CodeNotFound            = "404"
+	CodeTooManyRequests     = "429"
+	CodeInternalServerError = "500"
 )
 
 // 错误描述映射
-var errorDescriptions = map[int]string{
+var errorDescriptions = map[string]string{
 	CodeSuccess:             "请求成功",
 	CodeNoData:              "请求成功，但你查询的地区暂时没有你需要的数据。",
 	CodeBadRequest:          "请求错误，可能包含错误的请求参数或缺少必选的请求参数。",
@@ -27,7 +27,7 @@ var errorDescriptions = map[int]string{
 }
 
 // GetErrorDescription 根据错误码获取错误描述
-func GetErrorDescription(code int) string {
+func GetErrorDescription(code string) string {
 	if desc, ok := errorDescriptions[code]; ok {
 		return desc
 	}

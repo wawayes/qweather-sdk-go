@@ -2,12 +2,11 @@ package qweathersdkgo
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"net/url"
 )
 
-var key = "27df0ab1a3014458b59906f1c8bfa6f7"
+var key = "xxxxxx"
 
 type Client struct {
 	APIKey            string
@@ -38,10 +37,6 @@ func (c *Client) sendRequest(method, endpoint string, params url.Values, v inter
 		return err
 	}
 	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("API request failed with status code: %d, msg: %s", resp.StatusCode, GetErrorDescription(resp.StatusCode))
-	}
 
 	return json.NewDecoder(resp.Body).Decode(v)
 }
