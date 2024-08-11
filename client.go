@@ -6,7 +6,7 @@ import (
 	"net/url"
 )
 
-var key = "xxxxxx"
+var key = "xxx"
 
 type Client struct {
 	APIKey            string

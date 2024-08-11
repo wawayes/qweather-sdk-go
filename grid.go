@@ -2,7 +2,6 @@ package qweathersdkgo
 
 import (
 	"fmt"
-	"log"
 	"net/url"
 )
 
@@ -103,8 +102,7 @@ func (c *Client) GetGridCurrentWeather(location string) (*GridCurrentWeatherResp
 	var result GridCurrentWeatherResponse
 	err := c.sendRequest("GET", endpoint, params, &result)
 	if err != nil || result.Code != "200" {
-		log.Fatalf("API request failed with status code: %s, msg: %s", result.Code, GetErrorDescription(result.Code))
-		return nil, err
+		return nil, fmt.Errorf("GetGridCurrentWeather request failed with status code: %s, msg: %s", result.Code, GetErrorDescription(result.Code))
 	}
 	return &result, nil
 }
@@ -124,7 +122,7 @@ func (c *Client) GetGridDailyWeather(location string, days int) (*GridDailyWeath
 	var result GridDailyWeatherForecastResponse
 	err := c.sendRequest("GET", endpoint, params, &result)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("GetGridDailyWeather request failed with status code: %s, msg: %s", result.Code, GetErrorDescription(result.Code))
 	}
 	return &result, nil
 }
@@ -144,7 +142,7 @@ func (c *Client) GetGridHourlyWeather(location string, hours int) (*GridHourlyWe
 	var result GridHourlyWeatherForecastResponse
 	err := c.sendRequest("GET", endpoint, params, &result)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("GetGridHourlyWeather request failed with status code: %s, msg: %s", result.Code, GetErrorDescription(result.Code))
 	}
 	return &result, nil
 }

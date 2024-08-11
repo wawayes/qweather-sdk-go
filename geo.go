@@ -2,7 +2,6 @@ package qweathersdkgo
 
 import (
 	"fmt"
-	"log"
 	"net/url"
 )
 
@@ -44,8 +43,7 @@ func (c *Client) CityLookup(location string, number string) (*CityLookupResponse
 	var resp CityLookupResponse
 	err := c.sendRequest("GET", endpoint, params, &resp)
 	if err != nil || resp.Code != "200" {
-		log.Fatalf("API request failed with status code: %s, msg: %s", resp.Code, GetErrorDescription(resp.Code))
-		return nil, err
+		return nil, fmt.Errorf("CityLookup request failed with status code: %s, msg: %s", resp.Code, GetErrorDescription(resp.Code))
 	}
 	return &resp, nil
 }

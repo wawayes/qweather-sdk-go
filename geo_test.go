@@ -4,7 +4,7 @@ import "testing"
 
 func TestCityLookup(t *testing.T) {
 	c := NewClient(key)
-	resp, err := c.CityLookup("116.27,40.15", "")
+	resp, err := c.CityLookup("116.31,39.95", "")
 	if err != nil {
 		t.Errorf("Error: %v", err)
 	}

@@ -2,7 +2,6 @@ package qweathersdkgo
 
 import (
 	"fmt"
-	"log"
 	"net/url"
 )
 
@@ -70,8 +69,7 @@ func (c *Client) GetAirQuality(locationID string) (*AirQualityResponse, error) {
 	var resp AirQualityResponse
 	err := c.sendRequest("GET", endpoint, params, &resp)
 	if err != nil || resp.Code != "200" {
-		log.Fatalf("API request failed with status code: %s, msg: %s", resp.Code, GetErrorDescription(resp.Code))
-		return nil, err
+		return nil, fmt.Errorf("GetAirQuality request failed with status code: %s, msg: %s", resp.Code, GetErrorDescription(resp.Code))
 	}
 	return &resp, nil
 }

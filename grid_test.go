@@ -17,7 +17,7 @@ func TestGetGridCurrentWeather(t *testing.T) {
 
 func TestGetGridDailyWeather(t *testing.T) {
 	client := NewClient(key)
-	r, err := client.GetGridDailyWeather("116.41,39.92", 3)
+	r, err := client.GetGridDailyWeather("116.4123,39.9232", 3)
 	if err != nil {
 		fmt.Println("err", err)
 		t.Error(err)

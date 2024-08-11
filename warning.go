@@ -2,7 +2,6 @@ package qweathersdkgo
 
 import (
 	"fmt"
-	"log"
 	"net/url"
 )
 
@@ -62,7 +61,7 @@ func (c *Client) GetWarningWeather(location string) (*WarningWeatherResponse, er
 	var resp WarningWeatherResponse
 	err := c.sendRequest("GET", endpoint, params, &resp)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("GetWarningWeather request failed with status code: %s, msg: %s", resp.Code, GetErrorDescription(resp.Code))
 	}
 	return &resp, nil
 }
@@ -80,8 +79,7 @@ func (c *Client) GetWarningList() (*WarningLocationListResponse, error) {
 	var resp WarningLocationListResponse
 	err := c.sendRequest("GET", endpoint, params, &resp)
 	if err != nil || resp.Code != "200" {
-		log.Fatalf("API request failed with status code: %s, msg: %s", resp.Code, GetErrorDescription(resp.Code))
-		return nil, err
+		return nil, fmt.Errorf("GetWarningList request failed with status code: %s, msg: %s", resp.Code, GetErrorDescription(resp.Code))
 	}
 	return &resp, nil
 }

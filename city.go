@@ -2,7 +2,6 @@ package qweathersdkgo
 
 import (
 	"fmt"
-	"log"
 	"net/url"
 )
 
@@ -99,7 +98,7 @@ func (c *Client) GetCurrentWeather(location string) (*CurrentWeather, error) {
 	var result CurrentWeather
 	err := c.sendRequest("GET", endpoint, params, &result)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("GetCurrentWeather request failed with status code: %s, msg: %s", result.Code, GetErrorDescription(result.Code))
 	}
 
 	return &result, nil
@@ -121,7 +120,7 @@ func (c *Client) GetDailyForecast(location string, days int) (*DailyForecast, er
 	var result DailyForecast
 	err := c.sendRequest("GET", endpoint, params, &result)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("GetDailyForecast request failed with status code: %s, msg: %s", result.Code, GetErrorDescription(result.Code))
 	}
 
 	return &result, nil
@@ -143,8 +142,7 @@ func (c *Client) GetHourlyWeather(location string, days int) (*HourlyWeatherResp
 	var result HourlyWeatherResponse
 	err := c.sendRequest("GET", endpoint, params, &result)
 	if err != nil || result.Code != "200" {
-		log.Fatalf("API request failed with status code: %s, msg: %s", result.Code, GetErrorDescription(result.Code))
-		return nil, err
+		return nil, fmt.Errorf("GetHourlyWeather request failed with status code: %s, msg: %s", result.Code, GetErrorDescription(result.Code))
 	}
 
 	return &result, nil
