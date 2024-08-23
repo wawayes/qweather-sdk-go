@@ -34,7 +34,7 @@ type CityLookupResponse struct {
  * @param {string} location (必选)需要查询地区的名称，支持文字、以英文逗号分隔的经度,纬度坐标（十进制，最多支持小数点后两位）、LocationID或Adcode（仅限中国城市）。例如 location=北京 或 location=116.41,39.92
  * @return {*}
  */
-func (c *Client) CityLookup(location string, number string) (*CityLookupResponse, error) {
+func (c *Client) CityLookup(location string) (*CityLookupResponse, error) {
 	endpoint := fmt.Sprintf("%s/city/lookup", c.GeoURL)
 	params := url.Values{
 		"key":      {c.APIKey},
